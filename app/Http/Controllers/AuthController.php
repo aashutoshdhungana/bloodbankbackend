@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Exception;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -32,11 +32,14 @@ class AuthController extends Controller
                 'diseases' => $validatedData['diseases'],
             ]);
 
-            $tokenResult = $user->createToken('Auth Token')->plainTextToken;
+            if ($user == null) {
+                return response()->json([
+                    'error' => 'Failed to create user'
+                ], 400);
+            }
 
             return response()->json([
-                'token' => $tokenResult,
-                'message' => 'Successfully created token',
+                'message' => 'Succesfully registered'
             ], 201);
         } catch (Exception $e) {
             Log::error('Error during registration: ' . $e->getMessage());
@@ -55,17 +58,16 @@ class AuthController extends Controller
         ]);
 
         $user = User::where('email', $validatedData['email'])->first();
-        if (! $user || ! Hash::check($validatedData['password'], $user->password)) {
-            return response([
-                'error'=> 'Bad Creds',
-            ],401);
+        
+        if (Auth::attempt($validatedData)) {
+            $request->session()->regenerate();
+            return response()->json([
+                'user' => $user
+            ], 200);
         }
-        $tokenResult = $user->createToken('Auth Token')->plainTextToken;
-
         return response()->json([
-            'token' => $tokenResult,
-            'message' => 'Successfully created token',
-        ], 201);  
+            'error' => 'Email and password do not match'
+        ], 400);
     }
 }
 
