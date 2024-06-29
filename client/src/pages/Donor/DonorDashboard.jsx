@@ -57,19 +57,20 @@ const DonorDashboard = () => {
         const getDonations = async () => {
             var result = await axios.get("/api/blooddonation");
             if (result && result.status == 200) {
-                setDonations(
-                    result.data.map((x) => {
-                        return {
-                            name: "Aashutosh",
-                            bloodGroup: "O+ve",
-                            pints: "0",
-                            status: "rejected",
-                        };
-                    })
-                );
+                console.log(result.data);
+                // setDonations(
+                //     result.data.map((x) => {
+                //         return {
+                //             name: "Aashutosh",
+                //             bloodGroup: "O+ve",
+                //             pints: "0",
+                //             status: "rejected",
+                //         };
+                //     })
+                // );
             }
         };
-
+        getDonations();
         setDonations([
             {
                 name: "Aashutosh",
