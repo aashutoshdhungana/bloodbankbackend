@@ -23,11 +23,10 @@ const AppContent = () => {
 
   return (
     <>
-      {location.pathname !== '/admin-panel' && location.pathname !== '/doner-page' && location.pathname !== '/patient-page' && <Navbar />}
+      <Navbar />
       <Routes>
         <Route path="/" element={<Body />} />
         <Route path="/about-us" element={<AboutUs />} />
-
         <Route path="/admin-panel" element={<AdminSidebar />} />
         <Route path="/doner-page" element={<DonerPage />} />
         <Route path="/patient-page" element={<PatientPage />} />
