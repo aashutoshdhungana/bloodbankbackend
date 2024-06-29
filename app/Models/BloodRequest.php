@@ -9,7 +9,7 @@ class BloodRequest extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'bloodtype' ,'units'];
+    protected $fillable = ['user_id', 'bloodtype' ,'units', 'received'];
 
     public function user()
     {

@@ -9,7 +9,7 @@ class BloodDonation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'bloodtype', 'units'];
+    protected $fillable = ['user_id', 'bloodtype', 'status', 'units'];
 
     public function user()
     {

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('bloodtype')->constrained('blood_types');
             $table->integer('units');
+            $table->boolean('received')->default(false);
             $table->timestamps();
         });
     }
