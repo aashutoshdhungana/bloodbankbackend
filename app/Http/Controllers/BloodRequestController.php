@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BloodRequest;
 use App\Models\BloodType;
+use App\Models\BloodRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 
@@ -16,8 +17,15 @@ class BloodRequestController extends Controller
     public function index()
     {
         //
-        Gate::authorize("viewAny", BloodRequest::class);
-        return BloodRequest::with('user')->get();
+        $requests = BloodRequest::with(['user','bloodType'])->get();
+        $usersRequest = [];
+        foreach ($requests as $request) {
+            if (Auth::user()->can('view', $request))
+            {
+                array_push($usersRequest, $request);
+            }
+        }
+        return response()->json($usersRequest, 200);
     }
 
     /**
@@ -26,7 +34,6 @@ class BloodRequestController extends Controller
     public function store(Request $request)
     {
         //
-        Gate::authorize("create", BloodRequest::class);
         return BloodRequest::create($request->all());
     }
 
@@ -36,7 +43,6 @@ class BloodRequestController extends Controller
     public function show(string $id)
     {
         //
-        Gate::authorize("view", BloodRequest::class);
         return BloodRequest::with('user')->findOrFail($id);
     }
 
@@ -46,8 +52,12 @@ class BloodRequestController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        Gate::authorize("update", BloodRequest::class);
-        return BloodRequest::findOrFail($id)->update($request->all());
+        $entity = BloodRequest::findOrFail($id);
+        if (Auth::user()->can('update', $entity))
+        {
+            return $entity->update($request->all());            
+        }
+        return response()->json([], 403);
     }
 
     /**
@@ -66,9 +76,12 @@ class BloodRequestController extends Controller
 
     public function donate($id)
     {
-        Gate::authorize("update", BloodRequest::class);
         // Find the blood request by ID
         $bloodRequest = BloodRequest::find($id);
+
+        if (Auth::user()->cannot('update', $bloodRequest)){
+            return response()->json([], 403);            
+        }
 
         // Check if the "received" field is true
         if ($bloodRequest->received) {

@@ -36,7 +36,6 @@ class BloodDonationController extends Controller
      */
     public function store(Request $request)
     {
-        Gate::authorize("create", BloodDonation::class);
         return BloodDonation::create($request->all());
     }
 
@@ -54,8 +53,12 @@ class BloodDonationController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        Gate::authorize("update", BloodDonation::class);
-        return BloodDonation::findOrFail($id)->update($request->all());
+        $entity = BloodDonation::findOrFail($id);
+        if (Auth::user()->can('update', $entity))
+        {
+            return $entity->update($request->all());            
+        }
+        return response()->json([], 403);
     }
 
     /**
@@ -73,11 +76,13 @@ class BloodDonationController extends Controller
 
     public function approve(Request $request, string $id)
     {
-        Gate::authorize("update", BloodDonation::class);
         try {
-
             // Find the BloodDonation record by ID
             $bloodDonation = BloodDonation::find($id);
+
+            if (Auth::user()->cannot('update', $bloodDonation)){
+                return response()->json([], 403);            
+            }
             
             if (!$bloodDonation) {
                 return response()->json(['error' => 'Blood donation not found'], 404);
@@ -93,8 +98,9 @@ class BloodDonationController extends Controller
             ]);
 
             // Update the status field
-            $bloodDonation->status = $request->status;
-            $bloodDonation->save();
+                $bloodDonation->status = $request->status;
+                $bloodDonation->save();
+
 
             // If the requested status is 2, no further action is required
             if ($request->status == 2) {
