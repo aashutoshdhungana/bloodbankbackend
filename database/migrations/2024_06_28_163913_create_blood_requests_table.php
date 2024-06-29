@@ -19,6 +19,7 @@ return new class extends Migration
             $table->boolean('received')->default(false);
             $table->timestamps();
         });
+
     }
 
     /**

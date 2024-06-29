@@ -19,7 +19,7 @@ class BloodDonationController extends Controller
     {
         //
         Gate::authorize("viewAny", BloodDonation::class);
-        return BloodDonation::with('user')->get();
+        return BloodDonation::with(['user', 'bloodType'])->get();
     }
 
     /**
@@ -37,7 +37,7 @@ class BloodDonationController extends Controller
     public function show(string $id)
     {
         Gate::authorize("view", BloodDonation::class);
-        return BloodDonation::with('user')->findOrFail($id);
+        return BloodDonation::with(['user', 'bloodType'])->findOrFail($id);
     }
 
     /**

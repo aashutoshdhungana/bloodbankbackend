@@ -15,4 +15,9 @@ class BloodDonation extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function bloodType()
+    {
+        return $this->belongsTo(BloodType::class);
+    }
 }
