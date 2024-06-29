@@ -52,6 +52,11 @@ class User extends Authenticatable
         ];
     }
 
+    public function isAdmin()
+    {
+        return $this->isAdmin == true;
+    }
+
     public function donations()
     {
         return $this->hasMany(BloodDonation::class);

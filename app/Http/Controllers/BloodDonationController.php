@@ -7,6 +7,8 @@ use App\Models\BloodType;
 use App\Models\User;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+
 
 class BloodDonationController extends Controller
 {
@@ -16,7 +18,8 @@ class BloodDonationController extends Controller
     public function index()
     {
         //
-        return BloodDonation::with('user')->get();
+        Gate::authorize("viewAny", BloodDonation::class);
+        return BloodDonation::with(['user', 'bloodType'])->get();
     }
 
     /**
@@ -24,6 +27,7 @@ class BloodDonationController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize("create", BloodDonation::class);
         return BloodDonation::create($request->all());
     }
 
@@ -32,7 +36,8 @@ class BloodDonationController extends Controller
      */
     public function show(string $id)
     {
-        return BloodDonation::with('user')->findOrFail($id);
+        Gate::authorize("view", BloodDonation::class);
+        return BloodDonation::with(['user', 'bloodType'])->findOrFail($id);
     }
 
     /**
@@ -40,6 +45,7 @@ class BloodDonationController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        Gate::authorize("update", BloodDonation::class);
         return BloodDonation::findOrFail($id)->update($request->all());
     }
 
@@ -48,11 +54,13 @@ class BloodDonationController extends Controller
      */
     public function destroy(string $id)
     {
+        Gate::authorize("delete", BloodDonation::class);
         BloodDonation::findOrFail($id)->delete();   
     }
 
     public function approve(Request $request, string $id)
     {
+        Gate::authorize("update", BloodDonation::class);
         try {
 
             // Find the BloodDonation record by ID

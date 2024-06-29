@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\BloodRequest;
 use App\Models\BloodType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+
 
 class BloodRequestController extends Controller
 {
@@ -14,6 +16,7 @@ class BloodRequestController extends Controller
     public function index()
     {
         //
+        Gate::authorize("viewAny", BloodRequest::class);
         return BloodRequest::with('user')->get();
     }
 
@@ -23,6 +26,7 @@ class BloodRequestController extends Controller
     public function store(Request $request)
     {
         //
+        Gate::authorize("create", BloodRequest::class);
         return BloodRequest::create($request->all());
     }
 
@@ -32,6 +36,7 @@ class BloodRequestController extends Controller
     public function show(string $id)
     {
         //
+        Gate::authorize("view", BloodRequest::class);
         return BloodRequest::with('user')->findOrFail($id);
     }
 
@@ -41,6 +46,7 @@ class BloodRequestController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        Gate::authorize("update", BloodRequest::class);
         return BloodRequest::findOrFail($id)->update($request->all());
     }
 
@@ -50,11 +56,13 @@ class BloodRequestController extends Controller
     public function destroy(string $id)
     {
         //
+        Gate::authorize("delete", BloodRequest::class);
         return BloodRequest::findOrFail($id)->delete();
     }
 
     public function donate($id)
     {
+        Gate::authorize("update", BloodRequest::class);
         // Find the blood request by ID
         $bloodRequest = BloodRequest::find($id);
 
