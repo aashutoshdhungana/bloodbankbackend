@@ -14,12 +14,12 @@ Route::get('/user', function (Request $request) {
 Route::group(['prefix'=> 'auth'], function () {
     Route::post('register',[AuthController::class,'register']);
     Route::post('login',[AuthController::class,'login']);
-    Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 });
 
-Route::patch('/donations/{id}/approve', [BloodDonationController::class, 'approve']);
-Route::patch('/donations/{id}/donate', [BloodRequestController::class, 'donate']);
+Route::patch('/donations/{id}/approve', [BloodDonationController::class, 'approve'])->middleware('auth:sanctum');
+Route::patch('/donations/{id}/donate', [BloodRequestController::class, 'donate'])->middleware('auth:sanctum');
 
-Route::apiResource('blooddonation', BloodDonationController::class);
-Route::apiResource('bloodrequest', BloodRequestController::class);
-Route::apiResource('bloodtype', BloodTypeController::class);
+Route::apiResource('blooddonation', BloodDonationController::class)->middleware('auth:sanctum');
+Route::apiResource('bloodrequest', BloodRequestController::class)->middleware('auth:sanctum');
+Route::apiResource('bloodtype', BloodTypeController::class)->middleware('auth:sanctum');
