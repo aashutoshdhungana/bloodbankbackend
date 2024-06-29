@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\BloodDonation;
 use App\Models\BloodType;
 use App\Models\User;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 
@@ -18,8 +20,15 @@ class BloodDonationController extends Controller
     public function index()
     {
         //
-        Gate::authorize("viewAny", BloodDonation::class);
-        return BloodDonation::with(['user', 'bloodType'])->get();
+        $donations = BloodDonation::with(['user','bloodType'])->get();
+        $usersDonation = [];
+        foreach ($donations as $donation) {
+            if (Auth::user()->can('view', $donation))
+            {
+                array_push($usersDonation, $donation);
+            }
+        }
+        return Response::json($usersDonation, 200);
     }
 
     /**
