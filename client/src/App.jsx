@@ -9,6 +9,7 @@ import PatientPage from './pages/PatientPage/PatientPage';
 import LoginPage from './pages/Login/LoginPage';
 import RegistrationPage from './pages/Register/RegistrationPage';
 import AboutUs from './pages/AboutUs/AboutUs';
+import DonorDashboard from './pages/Donor/DonorDashboard';
 
 function App() {
   return (
@@ -28,7 +29,7 @@ const AppContent = () => {
         <Route path="/" element={<Body />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/admin-panel" element={<AdminSidebar />} />
-        <Route path="/doner-page" element={<DonerPage />} />
+        <Route path="/donorDashboard" element={<DonorDashboard />} />
         <Route path="/patient-page" element={<PatientPage />} />
         <Route path="/login-page" element={<LoginPage />} />
         <Route path="/registration-page" element={<RegistrationPage />} />

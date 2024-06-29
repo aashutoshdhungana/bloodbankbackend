@@ -5,7 +5,7 @@ import { BiDonateBlood } from "react-icons/bi";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoCloseSharp } from "react-icons/io5";
 import DonerHome from './DonerHome';
-import DonateBlood from './DonateBlood';
+// import DonateBlood from './DonateBlood';
 import BloodRequest from './BloodRequest';
 
 const DonerPage = () => {
@@ -61,7 +61,7 @@ const DonerPage = () => {
         </div>
         <div>
           {activeComponent === 'Dashboard' && <DonerHome />}
-          {activeComponent === 'Doner' && <DonateBlood />}
+          {/* {activeComponent === 'Doner' && <DonateBlood />} */}
           {activeComponent === 'Patient' && <BloodRequest />}
         </div>
       </div>

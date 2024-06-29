@@ -3,6 +3,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logOut, updateUserData } from '../../store/slices/UserSlice';
+import axios from 'axios';
 
 const Navbar = () => {
 
@@ -15,15 +16,23 @@ const Navbar = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         if (showDropdown)
-
             setShowDropdown(false)
     }, [pathname])
 
-    const logOutHandler = () => {
-        localStorage.removeItem("userState");
-        dispatch(updateUserData(null));
-        dispatch(logOut());
+    const logOutHandler = async () => {
+        // await axios.get('/sanctum/csrf-cookie');
+        let response = await axios.post('/api/auth/logout');
+        if (response && response.status === 200) {
+            alert("You have been logged out!")
+            localStorage.removeItem("userState");
+            dispatch(logOut());
+        }
+        else {
+            alert("Failed to log out!");
+        }
+
     }
+
     return (
         <div className='fixed z-50 w-full flex items-center justify-between drop-shadow-lg bg-white h-20 px-12'>
             <button onClick={() => navigate("/")} className='flex  font-semibold text-2xl sm:text-3xl '>
@@ -36,9 +45,12 @@ const Navbar = () => {
             <span onClick={() => setShowDropdown(false)} className={` ${showDropdown ? "" : "hidden"} absolute inset-0 h-screen `} />
             <div className=' hidden z-30 md:flex gap-5 '>
                 <button onClick={() => navigate("/")} className=' transition-all hover:bg-red-500 hover:text-white px-2 rounded-md'>Home </button>
+                {isLoggedIn && <button onClick={() => navigate("/donorDashboard")} className=' transition-all hover:bg-red-500 hover:text-white px-2 rounded-md'>Donor Dashboard</button>}
                 <button onClick={(() => navigate("/about-us"))} className=' transition-all hover:bg-red-500 hover:text-white px-2 rounded-md'>About Us</button>
                 {
                     isLoggedIn ? (<>
+                        <button onClick={() => { navigate("/donateBlood") }} className='transition-all hover:bg-red-500 hover:text-white px-2 rounded-md'>Donate Blood</button>
+                        <button onClick={() => { navigate("/requestBlood")}} className='transition-all hover:bg-red-500 hover:text-white px-2 rounded-md'>Request Blood</button>
                         <span>Hello, {user.name}</span>
                         <button onClick={() => {logOutHandler()}}>Log Out</button>
                     </>
