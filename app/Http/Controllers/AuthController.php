@@ -69,5 +69,15 @@ class AuthController extends Controller
             'error' => 'Email and password do not match'
         ], 400);
     }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+
+        return response()->json([
+            'message' => 'Successfully logged out'
+        ], 200);
+    }
 }
 
