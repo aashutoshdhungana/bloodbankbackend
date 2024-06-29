@@ -16,6 +16,9 @@ Route::group(['prefix'=> 'auth'], function () {
     Route::post('login',[AuthController::class,'login']);
 });
 
+Route::patch('/donations/{id}/approve', [BloodDonationController::class, 'approve']);
+Route::patch('/donations/{id}/donate', [BloodRequestController::class, 'donate']);
+
 Route::apiResource('blooddonation', BloodDonationController::class);
 Route::apiResource('bloodrequest', BloodRequestController::class);
 Route::apiResource('bloodtype', BloodTypeController::class);

@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('password');
             $table->foreignId('bloodtype')->constrained('blood_types');
             $table->json('diseases')->nullable();
+            $table->boolean('isAdmin')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

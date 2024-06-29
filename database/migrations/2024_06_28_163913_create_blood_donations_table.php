@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('id')->primary()->autoIncrement();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('bloodtype')->constrained('blood_types');
-            $table->enum('status', ['0','1','2']);
+            $table->enum('status', ['0','1','2'])->default('0');
             $table->integer('units');
             $table->timestamps();
         });
