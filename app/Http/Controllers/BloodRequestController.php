@@ -56,8 +56,12 @@ class BloodRequestController extends Controller
     public function destroy(string $id)
     {
         //
-        Gate::authorize("delete", BloodRequest::class);
-        return BloodRequest::findOrFail($id)->delete();
+        $entity = BloodRequest::findOrFail($id);
+        if (Auth::user()->can('delete', $entity))
+        {
+            return $entity->delete();            
+        }
+        return response()->json([], 403);
     }
 
     public function donate($id)

@@ -28,7 +28,7 @@ class BloodDonationController extends Controller
                 array_push($usersDonation, $donation);
             }
         }
-        return Response::json($usersDonation, 200);
+        return response()->json($usersDonation, 200);
     }
 
     /**
@@ -63,8 +63,12 @@ class BloodDonationController extends Controller
      */
     public function destroy(string $id)
     {
-        Gate::authorize("delete", BloodDonation::class);
-        BloodDonation::findOrFail($id)->delete();   
+        $entity = BloodDonation::findOrFail($id);
+        if (Auth::user()->can('delete', $entity))
+        {
+            return $entity->delete();            
+        }
+        return response()->json([], 403);
     }
 
     public function approve(Request $request, string $id)

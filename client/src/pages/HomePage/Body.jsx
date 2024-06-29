@@ -23,6 +23,7 @@ const Body = () => {
     if (result && result.status === 201) {
       alert(`Blood donation entry has been recorded. We will email you the details about location and date soon.`);
       setShowBloodDonation(false);
+      navigate('/donorDashboard')
     } else {
       alert('Failed to add blood donation entry.');
     }
