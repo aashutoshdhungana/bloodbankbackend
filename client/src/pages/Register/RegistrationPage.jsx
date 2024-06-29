@@ -126,11 +126,12 @@ const RegistrationPage = () => {
                     <option value="0">Choose option</option>
                     <option value="1">A+</option>
                     <option value="2">A-</option>
-                    <option value="3">AB</option>
-                    <option value="4">B+</option>
-                    <option value="5">B-</option>
-                    <option value="6">O-</option>
-                    <option value="7">O+</option>
+                    <option value="3">AB+</option>
+                    <option value="4">AB-</option>
+                    <option value="5">B+</option>
+                    <option value="6">B-</option>
+                    <option value="7">O-</option>
+                    <option value="8">O+</option>
                   </Field>
                   <ErrorMessage name="bloodtype" component="div" className="text-red-500" />
                 </div>

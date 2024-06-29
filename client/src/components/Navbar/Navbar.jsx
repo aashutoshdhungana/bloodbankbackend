@@ -44,13 +44,13 @@ const Navbar = () => {
             {/* large Screen */}
             <span onClick={() => setShowDropdown(false)} className={` ${showDropdown ? "" : "hidden"} absolute inset-0 h-screen `} />
             <div className=' hidden z-30 md:flex gap-5 '>
-                <button onClick={() => navigate("/")} className=' transition-all hover:bg-red-500 hover:text-white px-2 rounded-md'>Home </button>
-                {isLoggedIn && <button onClick={() => navigate("/donorDashboard")} className=' transition-all hover:bg-red-500 hover:text-white px-2 rounded-md'>Donor Dashboard</button>}
-                <button onClick={(() => navigate("/about-us"))} className=' transition-all hover:bg-red-500 hover:text-white px-2 rounded-md'>About Us</button>
+                {user?.isAdmin == 0 && <button onClick={() => navigate("/")} className=' transition-all hover:bg-red-500 hover:text-white px-2 rounded-md'>Home </button>}
+                {user?.isAdmin == 1 && isLoggedIn && <button onClick={() => navigate("/adminDashboard")} className=' transition-all hover:bg-red-500 hover:text-white px-2 rounded-md'>Admin Dashboard</button>}
+                {user?.isAdmin == 0 && isLoggedIn && <button onClick={() => navigate("/donorDashboard")} className=' transition-all hover:bg-red-500 hover:text-white px-2 rounded-md'>Donor Dashboard</button>}
+                {user?.isAdmin == 0 && <button onClick={(() => navigate("/about-us"))} className=' transition-all hover:bg-red-500 hover:text-white px-2 rounded-md'>About Us</button>}
                 {
                     isLoggedIn ? (<>
-                        <button onClick={() => { navigate("/donateBlood") }} className='transition-all hover:bg-red-500 hover:text-white px-2 rounded-md'>Donate Blood</button>
-                        <button onClick={() => { navigate("/requestBlood")}} className='transition-all hover:bg-red-500 hover:text-white px-2 rounded-md'>Request Blood</button>
+                        {user?.isAdmin == 0 && <button onClick={() => { navigate("/requestBlood")}} className='transition-all hover:bg-red-500 hover:text-white px-2 rounded-md'>Request Blood</button>}
                         <span>Hello, {user.name}</span>
                         <button onClick={() => {logOutHandler()}}>Log Out</button>
                     </>

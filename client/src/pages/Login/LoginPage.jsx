@@ -7,7 +7,7 @@ import axios from 'axios';
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { isLoggedIn } = useSelector(state => state.user);
+    const { isLoggedIn, user } = useSelector(state => state.user);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -23,7 +23,6 @@ const LoginPage = () => {
             dispatch(updateUserData(apiResult.data?.user));
             dispatch(logIn());
             localStorage.setItem("userState", JSON.stringify(apiResult.data?.user))
-            navigate('/')
         }
         else {
             // swal
@@ -32,11 +31,16 @@ const LoginPage = () => {
     };
 
     useEffect(() => {
-        if (isLoggedIn) {
+        if (isLoggedIn && user.isAdmin == 0) {
           // Navigate to the home page after successful login
           navigate('/');
         }
-      }, [isLoggedIn, navigate]);
+
+        if (isLoggedIn && user.isAdmin == 1) {
+            // Navigate to the home page after successful login
+            navigate('/adminDashboard');
+          }
+      }, [isLoggedIn, navigate, user]);
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">

@@ -4,7 +4,7 @@ import { MdBloodtype, MdLoop } from "react-icons/md";
 import { BiSolidDonateBlood } from "react-icons/bi";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoCloseSharp } from "react-icons/io5";
-import Dashboard from '../../pages/Admin/Dashboard';
+import Dashboard from '../../pages/Admin/AdminDashboard';
 import Doner from '../../pages/Admin/Doner';
 import Patient from '../../pages/Admin/Patient';
 import Donations from '../../pages/Admin/Donations';

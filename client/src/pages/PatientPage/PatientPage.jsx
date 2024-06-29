@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Dashboard from '../../pages/Admin/Dashboard';
+import Dashboard from '../Admin/AdminDashboard';
 import { FaHome, FaUser, FaUserInjured } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoCloseSharp } from "react-icons/io5";

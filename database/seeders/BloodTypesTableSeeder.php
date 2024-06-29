@@ -17,13 +17,13 @@ class BloodTypesTableSeeder extends Seeder
         $bloodTypes = [
             ['type' => 'A+', 'units' => 0],
             ['type' => 'A-', 'units' => 0],
-            ['type' => 'AB', 'units' => 0],
+            ['type' => 'AB+', 'units' => 0],
+            ['type' => 'AB-', 'units' => 0],
             ['type' => 'B+', 'units' => 0],
             ['type' => 'B-', 'units' => 0],
             ['type' => 'O-', 'units' => 0],
             ['type' => 'O+', 'units' => 0],
         ];
-
         DB::table('blood_types')->insert($bloodTypes);
     }
 }

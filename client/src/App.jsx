@@ -10,6 +10,7 @@ import LoginPage from './pages/Login/LoginPage';
 import RegistrationPage from './pages/Register/RegistrationPage';
 import AboutUs from './pages/AboutUs/AboutUs';
 import DonorDashboard from './pages/Donor/DonorDashboard';
+import AdminDashboard from './pages/Admin/AdminDashboard';
 
 function App() {
   return (
@@ -28,7 +29,7 @@ const AppContent = () => {
       <Routes>
         <Route path="/" element={<Body />} />
         <Route path="/about-us" element={<AboutUs />} />
-        <Route path="/admin-panel" element={<AdminSidebar />} />
+        <Route path="/adminDashboard" element={<AdminDashboard />} />
         <Route path="/donorDashboard" element={<DonorDashboard />} />
         <Route path="/patient-page" element={<PatientPage />} />
         <Route path="/login-page" element={<LoginPage />} />

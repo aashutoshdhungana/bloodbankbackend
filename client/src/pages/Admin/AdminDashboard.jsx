@@ -1,10 +1,40 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Card, Metric, Text } from '@tremor/react';
 import { BsDropletFill } from "react-icons/bs";
+import axios from 'axios';
+import AdminBloodDonations from './AdminBloodDonations';
 
-const Dashboard = () => {
+const AdminDashboard = () => {
+    const [bloodCount, setBloodCount] = useState({
+        'O+' : 0,
+        'O-' : 0,
+        'A+' : 0,
+        'A-' : 0,
+        'B+' : 0,
+        'B-' : 0,
+        'AB+' : 0,
+        'AB-' : 0
+    });
+
+    const loadCount = async () => {
+        let response = await axios.get('api/bloodtype');
+        if (response && response.status == 200) {
+            response.data.forEach(x => {
+                setBloodCount(prevBloodCount => ({
+                    ...prevBloodCount,
+                    [x.type]: x.units
+                }));
+            })
+        }
+    }
+
+    useEffect(() => {
+        loadCount();
+    }, []);
+    
     return (
-        <div className='flex flex-col '>
+        <>
+                <div className='flex flex-col pt-[6rem]'>
             <div className='p-4 grid grid-cols-2 md:grid-cols-4 gap-4'>
                 <Card
                     className="mx-auto max-w-xs"
@@ -20,7 +50,7 @@ const Dashboard = () => {
                         </div>
 
                         <div>
-                            0
+                            {bloodCount['A+']}
                         </div>
                     </div>
 
@@ -40,7 +70,7 @@ const Dashboard = () => {
                         </div>
 
                         <div>
-                            0
+                        {bloodCount['B+']}
                         </div>
                     </div>
 
@@ -60,7 +90,7 @@ const Dashboard = () => {
                         </div>
 
                         <div>
-                            0
+                        {bloodCount['O+']}
                         </div>
                     </div>
 
@@ -80,7 +110,7 @@ const Dashboard = () => {
                         </div>
 
                         <div>
-                            0
+                        {bloodCount['AB+']}
                         </div>
                     </div>
 
@@ -100,7 +130,7 @@ const Dashboard = () => {
                         </div>
 
                         <div>
-                            0
+                        {bloodCount['A-']}
                         </div>
                     </div>
 
@@ -119,7 +149,7 @@ const Dashboard = () => {
                         </div>
 
                         <div>
-                            0
+                        {bloodCount['B-']}
                         </div>
                     </div>
 
@@ -139,7 +169,7 @@ const Dashboard = () => {
                         </div>
 
                         <div>
-                            0
+                        {bloodCount['O-']}
                         </div>
                     </div>
 
@@ -159,7 +189,7 @@ const Dashboard = () => {
                         </div>
 
                         <div>
-                            0
+                        {bloodCount['AB-']}
                         </div>
                     </div>
 
@@ -167,10 +197,10 @@ const Dashboard = () => {
                 </Card>
 
             </div>
-            <div className='h-[1px] bg-gray-500 w-64 ' />
         </div>
-
+        <AdminBloodDonations />
+        </>
     )
 }
 
-export default Dashboard
+export default AdminDashboard

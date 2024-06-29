@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('blood_types', function (Blueprint $table) {
             $table->id()->primary()->autoIncrement();
-            $table->enum('type', ['A+','A-', 'AB', 'B+', 'B-', 'O-', 'O+'])->unique();
+            $table->enum('type', ['A+','A-', 'AB+', 'B+', 'B-', 'O-', 'O+', 'AB-'])->unique();
             $table->integer('units')->default(0);
             $table->timestamps();
         });
