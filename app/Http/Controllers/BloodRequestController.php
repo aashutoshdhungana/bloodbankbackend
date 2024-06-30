@@ -43,7 +43,7 @@ class BloodRequestController extends Controller
     public function show(string $id)
     {
         //
-        return BloodRequest::with('user')->findOrFail($id);
+        return BloodRequest::with(['user', 'bloodType'])->findOrFail($id);
     }
 
     /**
@@ -79,7 +79,7 @@ class BloodRequestController extends Controller
         // Find the blood request by ID
         $bloodRequest = BloodRequest::find($id);
 
-        if (Auth::user()->cannot('update', $bloodRequest)){
+        if (Auth::user()->cannot('donate', BloodRequest::class)){
             return response()->json([], 403);            
         }
 
@@ -93,7 +93,7 @@ class BloodRequestController extends Controller
         $bloodTypeRequested = $bloodRequest->bloodtype;
 
         // Find the corresponding blood type record in the bloodtype table
-        $bloodType = BloodType::where('type', $bloodTypeRequested)->first();
+        $bloodType = BloodType::where('id', $bloodTypeRequested)->first();
 
         // Check if there are enough units available in the bloodtype table
         if ($unitsRequested > $bloodType->units) {

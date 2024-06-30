@@ -32,7 +32,7 @@ const RegistrationPage = () => {
           .oneOf([Yup.ref('password'), null], 'Passwords must match')
           .required('Confirm password is required'),
         bloodtype: Yup.number().required('Blood group is required').oneOf(
-          [1, 2, 3, 4, 5, 6, 7],
+          [1, 2, 3, 4, 5, 6, 7, 8],
           'Invalid blood group selected'
         ),
         diseases: Yup.array().nullable()

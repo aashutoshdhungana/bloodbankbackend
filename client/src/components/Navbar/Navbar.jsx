@@ -3,6 +3,8 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logOut, updateUserData } from '../../store/slices/UserSlice';
+import { FaRegUserCircle } from "react-icons/fa";
+import { IoLogOutOutline } from "react-icons/io5";
 import axios from 'axios';
 
 const Navbar = () => {
@@ -44,21 +46,22 @@ const Navbar = () => {
             {/* large Screen */}
             <span onClick={() => setShowDropdown(false)} className={` ${showDropdown ? "" : "hidden"} absolute inset-0 h-screen `} />
             <div className=' hidden z-30 md:flex gap-5 '>
-                {user?.isAdmin == 0 && <button onClick={() => navigate("/")} className=' transition-all hover:bg-red-500 hover:text-white px-2 rounded-md'>Home </button>}
-                {user?.isAdmin == 1 && isLoggedIn && <button onClick={() => navigate("/adminDashboard")} className=' transition-all hover:bg-red-500 hover:text-white px-2 rounded-md'>Admin Dashboard</button>}
-                {user?.isAdmin == 0 && isLoggedIn && <button onClick={() => navigate("/donorDashboard")} className=' transition-all hover:bg-red-500 hover:text-white px-2 rounded-md'>Donor Dashboard</button>}
-                {user?.isAdmin == 0 && <button onClick={(() => navigate("/about-us"))} className=' transition-all hover:bg-red-500 hover:text-white px-2 rounded-md'>About Us</button>}
+                {user?.isAdmin == 0 && <button onClick={() => navigate("/")} className=' transition-all border-b border-transparent hover:border-red-500 hover:border-b-2'>Home </button>}
+                {user?.isAdmin == 1 && isLoggedIn && <button onClick={() => navigate("/adminDashboard")} className=' transition-all border-b border-transparent hover:border-red-500 hover:border-b-2'>Admin Dashboard</button>}
+                {user?.isAdmin == 0 && isLoggedIn && <button onClick={() => navigate("/donorDashboard")} className=' transition-all border-b border-transparent hover:border-red-500 hover:border-b-2'>Donor Dashboard</button>}
+                {user?.isAdmin == 0 && isLoggedIn && <button onClick={() => navigate('/myrequests')} className='transition-all border-b border-transparent hover:border-red-500 hover:border-b-2'>My Requests</button>}
+                {!isLoggedIn && <button onClick={(() => navigate("/about-us"))} className=' transition-all border-b border-transparent hover:border-red-500 hover:border-b-2'>About Us</button>}
                 {
                     isLoggedIn ? (<>
-                        {user?.isAdmin == 0 && <button onClick={() => { navigate("/requestBlood")}} className='transition-all hover:bg-red-500 hover:text-white px-2 rounded-md'>Request Blood</button>}
-                        <span>Hello, {user.name}</span>
-                        <button onClick={() => {logOutHandler()}}>Log Out</button>
+                        {user?.isAdmin == 0 && <button onClick={() => { navigate("/requestBlood")}} className='transition-all border-b border-transparent hover:border-red-500 hover:border-b-2'>Request Blood</button>}
+                        <span className='flex items-center gap-2'><FaRegUserCircle />Hello, {user.name}</span>
+                        <button className='transition-all border-b border-transparent hover:border-red-500 hover:border-b-2 flex items-center gap-2' onClick={() => {logOutHandler()}}> <IoLogOutOutline /> Log Out</button>
                     </>
 
                     ) : (
                         <>
-                        <button onClick={() => { navigate("/login-page") }} className=' transition-all hover:bg-red-500 hover:text-white px-2 rounded-md' >Login</button>
-                        <button onClick={() => navigate("/registration-page")} className=' transition-all hover:bg-red-500 hover:text-white px-2 rounded-md'>Register</button>
+                        <button onClick={() => { navigate("/login-page") }} className='transition-all border-b border-transparent hover:border-red-500 hover:border-b-2 flex items-center gap-2' >Login</button>
+                        <button onClick={() => navigate("/registration-page")} className=' transition-all border-b border-transparent hover:border-red-500 hover:border-b-2 flex items-center gap-2'>Register</button>
                     </>
                     )
                 }
@@ -66,18 +69,18 @@ const Navbar = () => {
             <button onClick={() => setShowMenu(!showMenu)} className='md:hidden'><RxHamburgerMenu /></button>
             {/* Small screen */}
             <div className={` ${showMenu ? "h-52 p-5" : "h-0 overflow-hidden"} md:hidden flex flex-col gap-5 bg-white drop-shadow-lg absolute right-5 top-20 w-40 items-start transition-all ease-in-out  `}>
-                <button onClick={() => { navigate("/"); setShowMenu(!showMenu) }}>Home</button>
-                <button onClick={(() => { navigate("/about-us"); setShowMenu(!showMenu) })}>About Us</button>
+                <button className='transition-all border-b border-transparent hover:border-red-500 hover:border-b-2' onClick={() => { navigate("/"); setShowMenu(!showMenu) }}>Home</button>
+                <button className='transition-all border-b border-transparent hover:border-red-500 hover:border-b-2' onClick={(() => { navigate("/about-us"); setShowMenu(!showMenu) })}>About Us</button>
                 {
                     isLoggedIn ? (<>
-                        <span>Hello, {user.name}</span>
-                        <button onClick={() => {logOutHandler()}}>Log Out</button>
+                        <span className='flex items-center gap-2'><FaRegUserCircle /> Hello, {user.name}</span>
+                        <button className='transition-all border-b border-transparent hover:border-red-500 hover:border-b-2 flex items-center gap-2' onClick={() => {logOutHandler()}}><IoLogOutOutline /> Log Out</button>
                     </>
 
                     ) : (
                         <>
-                        <button onClick={() => { navigate("/login-page"); setShowDropdown(!showDropdown); setShowMenu(false) }} className=' transition-all hover:bg-red-500 hover:text-white px-2 rounded-md'>Log In</button>
-                        <button onClick={() => navigate("/registration-page")} className=' transition-all hover:bg-red-500 hover:text-white px-2 rounded-md'>Register</button>            
+                        <button className="transition-all border-b border-transparent hover:border-red-500 hover:border-b-2" onClick={() => { navigate("/login-page"); setShowDropdown(!showDropdown); setShowMenu(false) }} className=' transition-all border-b border-transparent hover:border-red-500 hover:border-b-2 flex items-center gap-2'>Log In</button>
+                        <button className="transition-all border-b border-transparent hover:border-red-500 hover:border-b-2" onClick={() => navigate("/registration-page")} className='transition-all border-b border-transparent hover:border-red-500 hover:border-b-2 flex items-center gap-2'>Register</button>            
                     </>
                     )
                 }

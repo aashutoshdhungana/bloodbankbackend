@@ -29,37 +29,37 @@ const TableRow = ({ person, getDonations }) => {
                 className="p-4 md:table-cell flex gap-2 relative md:static"
                 data-label="Donor Name"
             >
-                {person.name}
+             <p className='md:hidden font-bold'>Name:</p>   {person.name}
             </td>
             <td
                 className="p-4 md:table-cell flex gap-2 relative md:static"
                 data-label="Disease"
             >
-                {person.bloodGroup}
+              <p className='md:hidden font-bold'>Blood Group:</p>  {person.bloodGroup}
             </td>
             <td
                 className="p-4 md:table-cell flex gap-2 relative md:static"
                 data-label="Age"
             >
-                {person.pints}
+             <p className='md:hidden font-bold'>Pints:</p>   {person.pints}
             </td>
             <td
                 className="p-4 md:table-cell flex gap-2 relative md:static"
                 data-label="Blood Group"
             >
-                {person.status}
+              <p className='md:hidden font-bold'>Status:</p>  {person.status}
             </td>
             <td
                 className="p-4 md:table-cell flex gap-2 relative md:static"
                 data-label="Request Date"
             >
-                {person.donationDay}
+              <p className='md:hidden font-bold'>Donation Day:</p>  {person.donationDay}
             </td>
             <td
                 className="p-4 md:table-cell flex gap-2 relative md:static"
                 data-label="Status"
             >
-                {person.location}
+             <p className='md:hidden font-bold'>Location:</p>   {person.location}
             </td>
             <td className="p-4 md:table-cell flex gap-2 space-x-2 relative md:static">
                 <button className="bg-red-500 text-white py-1 px-3 rounded" onClick={() => {deleteDonation(person.id)}}>

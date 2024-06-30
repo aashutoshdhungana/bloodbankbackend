@@ -10,7 +10,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-
+use Illuminate\Support\Facades\Log;
 
 class BloodDonationController extends Controller
 {
@@ -89,16 +89,23 @@ class BloodDonationController extends Controller
             }
 
             // Check the current status
-            if ($bloodDonation->status != 0) {
-                return response()->json(['message' => 'Status already changed'], 200);
+            if ($bloodDonation->status != '0') {
+                return response()->json(['message' => 'Status already changed'], 400);
             }
 
-            $request->validate([
+            $validated =$request->validate([
                 'status' => 'required|integer|in:1,2',
+                'location' => 'nullable|string',
+                'date' => 'nullable|date'
             ]);
 
             // Update the status field
-                $bloodDonation->status = $request->status;
+                $bloodDonation->status = $validated['status'];
+
+                if ($validated['status'] == '1') {
+                    $bloodDonation->location = $validated['location'];
+                    $bloodDonation->date = $validated['date'];
+                }
                 $bloodDonation->save();
 
 
@@ -112,7 +119,7 @@ class BloodDonationController extends Controller
             $bloodTypeValue = $bloodDonation->bloodtype;
 
             // Find the corresponding BloodType record
-            $bloodType = BloodType::where('type', $bloodTypeValue)->first();
+            $bloodType = BloodType::where('id', $bloodTypeValue)->first();
 
             if (!$bloodType) {
                 return response()->json(['error' => 'Blood type not found'], 404);
@@ -127,6 +134,7 @@ class BloodDonationController extends Controller
         } catch (ValidationException $e) {
             return response()->json(['error' => $e->errors()], 422);
         } catch (\Exception $e) {
+            Log::error($e);
             return response()->json(['error' => 'An error occurred while approving the blood donation'], 500);
         }
     }

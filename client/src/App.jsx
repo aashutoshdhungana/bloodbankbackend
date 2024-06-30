@@ -11,6 +11,9 @@ import RegistrationPage from './pages/Register/RegistrationPage';
 import AboutUs from './pages/AboutUs/AboutUs';
 import DonorDashboard from './pages/Donor/DonorDashboard';
 import AdminDashboard from './pages/Admin/AdminDashboard';
+import BloodRequest from './pages/BloodRequest/BloodRequest';
+import MyBloodRequests from './pages/MyBloodRequests/MyBloodRequests';
+import EditBloodRequest from './pages/BloodRequest/EditBloodRequest';
 
 function App() {
   return (
@@ -31,7 +34,9 @@ const AppContent = () => {
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/adminDashboard" element={<AdminDashboard />} />
         <Route path="/donorDashboard" element={<DonorDashboard />} />
-        <Route path="/patient-page" element={<PatientPage />} />
+        <Route path="/requestBlood" element={<BloodRequest />} />
+        <Route path="/requestBlood/edit/:id" element={<EditBloodRequest />} />
+        <Route path="/myrequests" element={<MyBloodRequests/>} />
         <Route path="/login-page" element={<LoginPage />} />
         <Route path="/registration-page" element={<RegistrationPage />} />
       </Routes>

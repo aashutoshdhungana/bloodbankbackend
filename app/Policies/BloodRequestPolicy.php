@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\BloodDonation;
 use App\Models\BloodRequest;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
@@ -51,5 +52,10 @@ class BloodRequestPolicy
     {
         //
         return $bloodRequest->user_id == $user->id || $user->isAdmin();
+    }
+
+    public function donate(User $user): bool
+    {
+        return $user->isAdmin();        
     }
 }
